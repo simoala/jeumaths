@@ -201,6 +201,48 @@
   .duel-end .btns{display:flex; flex-wrap:wrap; gap:10px; justify-content:center}
   .duel-end .btns button, .duel-form .btns button{border:0; border-radius:12px; padding:10px 20px; font-weight:700; font-size:24px}
 
+  /* ---------- Jeu des tables de multiplication ---------- */
+  #multView{position:absolute; inset:0; z-index:15; padding:20px; display:flex; flex-direction:column; gap:14px;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(255,255,255,.07), transparent 40%),
+      repeating-linear-gradient(45deg, #1f4a3a 0 3px, #24563f 3px 6px)}
+  #multView[hidden]{display:none}
+  .mv-top{display:flex; align-items:center; gap:14px}
+  .mv-grid{flex:1; min-height:0; display:grid; grid-template-columns:720px minmax(0,1fr); gap:16px}
+  .mv-main{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; padding:20px; min-width:0}
+  .timer{position:relative; width:250px; height:250px}
+  .timer svg{width:100%; height:100%; transform:rotate(-90deg)}
+  .tr-bg{fill:#fff; stroke:#ece7d8; stroke-width:16}
+  .tr-fg{fill:none; stroke:var(--ok); stroke-width:16; stroke-linecap:round; stroke-dasharray:552.92; stroke-dashoffset:0; transition:stroke .3s}
+  .tnum{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:'Fredoka','Andika',sans-serif; font-size:104px; font-weight:700; color:var(--ok)}
+  .timer.warn .tr-fg{stroke:#f08a00} .timer.warn .tnum{color:#f08a00}
+  .timer.danger .tr-fg{stroke:var(--ko)} .timer.danger .tnum{color:var(--ko); animation:beat 1s infinite}
+  .timer.idle .tnum{color:#b9b3a0}
+  @keyframes beat{0%{transform:scale(1)}15%{transform:scale(1.15)}30%{transform:scale(1)}}
+  .op{font-family:'Fredoka','Andika',sans-serif; font-weight:700; line-height:1.05; white-space:nowrap; color:#1f2328; font-size:140px}
+  .op .q{color:var(--blue)}
+  .op .res{color:var(--end); display:inline-block; animation:pop .5s cubic-bezier(.2,1.6,.4,1)}
+  .op .ph{font-size:80px; color:var(--muted)}
+  .mv-msg{font-size:28px; font-weight:700; color:var(--muted); text-align:center; min-height:38px}
+  .mv-msg.alert{color:var(--ko); animation:shake .5s}
+  .mv-msg.good{color:var(--ok)}
+  .mv-btns{display:flex; gap:12px; flex-wrap:wrap; justify-content:center}
+  .mv-btns .spin-btn{font-size:27px; padding:12px 24px}
+  .mv-btns .check-btn{font-size:27px; padding:12px 20px}
+  .mv-btns .clap{background:#f0b400; box-shadow:0 5px 0 #a87e00}
+  .mv-side{padding:16px 18px; overflow:auto; font-size:20px; min-width:0}
+  .mv-side h3{margin:2px 0 8px; font-size:22px}
+  .tchips{display:grid; grid-template-columns:repeat(6,1fr); gap:6px; margin-bottom:12px}
+  .tchips.time{grid-template-columns:repeat(5,1fr)}
+  .tchip{border:3px solid #d8d2bf; background:#fff; border-radius:12px; font-size:24px; font-weight:700; padding:4px 0}
+  .tchip.on{background:var(--yellow); border-color:#c9a800; color:var(--verb)}
+  .mv-row{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:4px 0 12px; font-size:20px}
+  .mv-row input[type=number]{width:72px; font-size:22px; padding:3px 6px; border-radius:8px; border:2px solid #c9c3b0}
+  .mv-row input[type=checkbox]{width:24px; height:24px}
+  .mv-count{color:var(--muted); font-size:18px; margin-top:6px}
+  #mvTable .label-pink{margin-top:4px}
+  #mvTable table.conj{font-size:22px}
+
   .overlay{position:absolute; inset:0; background:rgba(30,8,14,.72); display:flex; align-items:center; justify-content:center; z-index:20; padding:30px}
   .overlay[hidden]{display:none}
   .panel{width:100%; max-height:100%; overflow:auto; padding:26px 30px}
@@ -274,6 +316,7 @@
       <div class="tools">
         <button class="tool" id="lessonBtn" title="Revoir la leçon">📖 Leçon</button>
         <button class="tool" id="duelBtn" title="Jeu à deux élèves">👥 Duel</button>
+        <button class="tool" id="multBtn" title="Jeu des tables de multiplication">✖️ Tables</button>
         <button class="tool" id="settingsBtn" title="Réglages de l'enseignant(e)">⚙️</button>
         <button class="tool" id="soundBtn" title="Son activé / coupé">🔊</button>
         <button class="tool" id="fsBtn" title="Plein écran">⛶</button>
@@ -343,6 +386,49 @@
         <div id="tableBox"></div>
       </div>
     </section>
+  </div>
+
+  <!-- ===== Jeu des tables de multiplication ===== -->
+  <div id="multView" hidden>
+    <div class="mv-top">
+      <div class="cloud">
+        <span class="pin" style="left:10px;top:12px;width:14px;height:14px"></span>
+        <span class="pin s" style="right:10px;top:10px;width:14px;height:14px"></span>
+        <h1>Tables de<br>multiplication</h1>
+      </div>
+      <div class="week" id="mvLabel" style="align-self:center"></div>
+      <div class="tools">
+        <button class="tool" id="mvBack" title="Revenir à la roue de conjugaison">🎡 Conjugaison</button>
+        <button class="tool" id="mvSound" title="Son activé / coupé">🔊</button>
+        <button class="tool" id="mvFs" title="Plein écran">⛶</button>
+      </div>
+    </div>
+    <div class="mv-grid">
+      <section class="card mv-main" aria-live="polite">
+        <span class="pin l"></span><span class="pin r"></span>
+        <div class="timer idle" id="timer">
+          <svg viewBox="0 0 200 200" aria-hidden="true"><circle class="tr-bg" cx="100" cy="100" r="88"/><circle class="tr-fg" id="timerRing" cx="100" cy="100" r="88"/></svg>
+          <div class="tnum" id="timerNum">10</div>
+        </div>
+        <div class="op" id="op"><span class="ph">Prêts ? ✍️</span></div>
+        <div class="mv-msg" id="mvMsg">Choisissez les tables, puis cliquez sur « Nouvelle opération ».</div>
+        <div class="mv-btns">
+          <button class="spin-btn" id="mvNew">▶ Nouvelle opération</button>
+          <button class="check-btn" id="mvReveal" disabled>👀 Correction</button>
+          <button class="check-btn clap" id="mvClap" title="Applaudir la classe">👏</button>
+        </div>
+      </section>
+      <section class="card mv-side">
+        <h3>Tables choisies :</h3>
+        <div class="tchips" id="tchips"></div>
+        <div class="mv-row">Multiplié par : de <input id="mMin" type="number" min="0" max="20"> à <input id="mMax" type="number" min="0" max="20"></div>
+        <h3>⏱️ Compte à rebours :</h3>
+        <div class="tchips time" id="timeChips"></div>
+        <label class="mv-row"><input type="checkbox" id="mShuffle"> Mélanger l'ordre (8 × 3 ou 3 × 8)</label>
+        <div id="mvTable"></div>
+        <div class="mv-count" id="mvCount"></div>
+      </section>
+    </div>
   </div>
 
   <!-- ===== Leçon ===== -->
@@ -1287,9 +1373,12 @@ $('checkBtn').addEventListener('click', check);
 $('sayBtn').addEventListener('click', say);
 $('answer').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); check(); } });
 document.addEventListener('keydown', e => {
+  if (!$('multView').hidden) return;
   if (e.key === 'Enter' && answered && !spinning && document.activeElement?.tagName !== 'TEXTAREA' && document.activeElement?.tagName !== 'BUTTON') { e.preventDefault(); spin(); }
 });
-$('soundBtn').addEventListener('click', () => { soundOn = !soundOn; $('soundBtn').textContent = soundOn ? '🔊' : '🔇'; });
+const toggleSound = () => { soundOn = !soundOn; $('soundBtn').textContent = $('mvSound').textContent = soundOn ? '🔊' : '🔇'; };
+$('soundBtn').addEventListener('click', toggleSound);
+$('mvSound').addEventListener('click', toggleSound);
 $('resetBtn').addEventListener('click', () => { score.good = score.total = score.streak = 0; updateScore(); });
 $('centerBtn').addEventListener('click', () => { if (!$('spinBtn').disabled) spin(); });
 const openOverlay = id => { $(id).hidden = false; };
@@ -1299,6 +1388,7 @@ $('settingsBtn').addEventListener('click', () => { fillSettingsForm(); $('linkNo
 document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => closeOverlay(b.dataset.close)));
 document.querySelectorAll('.overlay').forEach(o => o.addEventListener('click', e => { if (e.target === o) o.hidden = true; }));
 document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.overlay').forEach(o => o.hidden = true); });
+$('mvFs').addEventListener('click', () => $('fsBtn').click());
 $('fsBtn').addEventListener('click', () => {
   const d = document;
   if (d.fullscreenElement || d.webkitFullscreenElement) (d.exitFullscreen || d.webkitExitFullscreen).call(d);
@@ -1319,6 +1409,162 @@ document.addEventListener('fullscreenchange', fit);
 fit();
 
 /* ---------- Démarrage ---------- */
+/* =========================================================
+   6. JEU DES TABLES DE MULTIPLICATION (ardoise + compte à rebours)
+   ========================================================= */
+const MV_KEY = 'roue-multiplication-v1';
+const MV_DEF = {tables:[8], min:1, max:10, time:10, shuffle:false};
+const TIMES = [5, 10, 15, 20, 30];
+const RING = 552.92;            // périmètre du cercle du compte à rebours
+let mv = (() => {
+  try { const s = JSON.parse(localStorage.getItem(MV_KEY)); if (s && Array.isArray(s.tables)) return Object.assign({}, MV_DEF, s); } catch(e) {}
+  return Object.assign({}, MV_DEF);
+})();
+const saveMv = () => { try { localStorage.setItem(MV_KEY, JSON.stringify(mv)); } catch(e) {} };
+let mvCur = null, mvLast = null, mvTimer = null, mvCount = 0;
+
+sfx.tock = big => note(big ? 1040 : 720, 0, big ? 0.12 : 0.05, big ? 'square' : 'triangle', big ? 0.12 : 0.14);
+sfx.gong = () => {
+  [0, 0.22, 0.44].forEach(t => note(988, t, 0.16, 'square', 0.09));
+  note(392, 0.7, 1.8, 'sine', 0.3); note(196, 0.7, 2, 'sine', 0.22); note(784, 0.7, 0.9, 'triangle', 0.07);
+};
+
+function mvLabel(){
+  const t = [...mv.tables].sort((a,b) => a - b);
+  $('mvLabel').textContent = t.length === 1 ? `Table de ${t[0]}` : t.length ? `Tables de ${t.slice(0,-1).join(', ')} et ${t[t.length-1]}` : 'Aucune table choisie';
+}
+function buildMv(){
+  const tc = $('tchips'); tc.textContent = '';
+  for (let n = 1; n <= 12; n++){
+    const b = document.createElement('button');
+    b.className = 'tchip' + (mv.tables.includes(n) ? ' on' : '');
+    b.textContent = n;
+    b.title = 'Table de ' + n;
+    b.addEventListener('click', () => {
+      mv.tables = mv.tables.includes(n) ? mv.tables.filter(x => x !== n) : [...mv.tables, n];
+      b.classList.toggle('on', mv.tables.includes(n));
+      saveMv(); mvLabel();
+    });
+    tc.appendChild(b);
+  }
+  const tm = $('timeChips'); tm.textContent = '';
+  for (const t of TIMES){
+    const b = document.createElement('button');
+    b.className = 'tchip' + (mv.time === t ? ' on' : '');
+    b.textContent = t + ' s';
+    b.addEventListener('click', () => {
+      mv.time = t; saveMv();
+      tm.querySelectorAll('.tchip').forEach(x => x.classList.toggle('on', x === b));
+      if (!mvTimer) { $('timerNum').textContent = t; }
+    });
+    tm.appendChild(b);
+  }
+  $('mMin').value = mv.min; $('mMax').value = mv.max; $('mShuffle').checked = mv.shuffle;
+  $('timerNum').textContent = mv.time;
+  mvLabel();
+}
+const clampN = (v, d) => { v = parseInt(v, 10); return isNaN(v) ? d : Math.max(0, Math.min(20, v)); };
+$('mMin').addEventListener('change', () => { mv.min = clampN($('mMin').value, 1); if (mv.min > mv.max) mv.max = mv.min; $('mMin').value = mv.min; $('mMax').value = mv.max; saveMv(); });
+$('mMax').addEventListener('change', () => { mv.max = clampN($('mMax').value, 10); if (mv.max < mv.min) mv.min = mv.max; $('mMin').value = mv.min; $('mMax').value = mv.max; saveMv(); });
+$('mShuffle').addEventListener('change', () => { mv.shuffle = $('mShuffle').checked; saveMv(); });
+
+function setOp(html){
+  const op = $('op');
+  op.innerHTML = html;
+  const len = op.textContent.length;
+  op.style.fontSize = Math.min(140, Math.floor(660 / (len * 0.58))) + 'px';
+}
+function setMsg(text, cls){ const m = $('mvMsg'); m.className = 'mv-msg' + (cls ? ' ' + cls : ''); m.textContent = text; }
+
+function stopTimer(){ if (mvTimer){ clearInterval(mvTimer); mvTimer = null; } }
+function drawTimer(rem, dur){
+  const sec = Math.max(0, Math.ceil(rem / 1000));
+  $('timerNum').textContent = sec;
+  $('timerRing').style.strokeDashoffset = (RING * (1 - Math.max(0, rem) / dur)).toFixed(1);
+  const t = $('timer');
+  t.classList.remove('idle');
+  t.classList.toggle('warn', rem <= dur / 2 && sec > 3);
+  t.classList.toggle('danger', sec <= 3);
+  return sec;
+}
+function startTimer(){
+  stopTimer();
+  const dur = mv.time * 1000, end = performance.now() + dur;
+  let lastSec = drawTimer(dur, dur);
+  mvTimer = setInterval(() => {
+    const rem = end - performance.now();
+    const sec = drawTimer(rem, dur);
+    if (sec !== lastSec && sec > 0){ sfx.tock(sec <= 3); lastSec = sec; }
+    if (rem <= 0){
+      stopTimer();
+      $('timer').classList.remove('warn'); $('timer').classList.add('danger');
+      setMsg('⏰ Temps écoulé ! Levez les ardoises !', 'alert');
+      sfx.gong();
+    }
+  }, 100);
+}
+function newOp(){
+  if (!mv.tables.length){ setMsg('Choisissez au moins une table à droite 👉', 'alert'); return; }
+  let a, b, tries = 0;
+  do {
+    a = mv.tables[rnd(mv.tables.length)];
+    b = mv.min + rnd(mv.max - mv.min + 1);
+    tries++;
+  } while (mvLast && tries < 30 && a === mvLast[0] && b === mvLast[1]);
+  mvLast = [a, b];
+  const swap = mv.shuffle && Math.random() < 0.5;
+  mvCur = {a, b, x: swap ? b : a, y: swap ? a : b, revealed:false};
+  setOp(`${mvCur.x} × ${mvCur.y} = <span class="q">?</span>`);
+  setMsg("✍️ Écrivez le résultat sur l'ardoise !");
+  $('mvReveal').disabled = false;
+  $('mvTable').textContent = '';
+  mvCount++;
+  $('mvCount').textContent = `Opérations faites : ${mvCount}`;
+  sfx.ding();
+  startTimer();
+  $('mvReveal').focus({preventScroll:true});
+}
+function revealOp(){
+  if (!mvCur || mvCur.revealed) return;
+  mvCur.revealed = true;
+  stopTimer();
+  setOp(`${mvCur.x} × ${mvCur.y} = <span class="res">${mvCur.a * mvCur.b}</span>`);
+  setMsg('✔ Voici la correction. Qui a juste ? 👏', 'good');
+  $('mvReveal').disabled = true;
+  sfx.ding();
+  // Rappel de la table, avec la ligne de l'opération en couleur
+  const box = $('mvTable'); box.textContent = '';
+  const lab = document.createElement('div'); lab.className = 'label-pink';
+  lab.append('La table de '); const vb = document.createElement('span'); vb.className = 'vb'; vb.textContent = mvCur.a; lab.appendChild(vb);
+  box.appendChild(lab);
+  const rows = []; for (let i = mv.min; i <= mv.max; i++) rows.push(i);
+  const half = Math.ceil(rows.length / 2), g = document.createElement('div'); g.className = 'tcols';
+  [rows.slice(0, half), rows.slice(half)].forEach(part => {
+    const tb = document.createElement('table'); tb.className = 'conj';
+    part.forEach(i => {
+      const tr = document.createElement('tr'); if (i === mvCur.b) tr.className = 'cur';
+      const td = document.createElement('td');
+      td.append(`${mvCur.a} × ${i} = `);
+      const r = document.createElement('span'); r.className = 'c-end'; r.textContent = mvCur.a * i; td.appendChild(r);
+      tr.appendChild(td); tb.appendChild(tr);
+    });
+    g.appendChild(tb);
+  });
+  box.appendChild(g);
+  $('mvNew').focus({preventScroll:true});
+}
+$('mvNew').addEventListener('click', newOp);
+$('mvReveal').addEventListener('click', revealOp);
+$('mvClap').addEventListener('click', () => { confetti(false); sfx.fanfare(false); sfx.applause(3, 1.2); });
+$('multBtn').addEventListener('click', () => { buildMv(); $('multView').hidden = false; });
+$('mvBack').addEventListener('click', () => { stopTimer(); $('multView').hidden = true; });
+// Barre d'espace : nouvelle opération / correction
+document.addEventListener('keydown', e => {
+  if ($('multView').hidden || e.key !== ' ' || /INPUT|TEXTAREA|BUTTON/.test(document.activeElement?.tagName || '')) return;
+  e.preventDefault();
+  if (mvCur && !mvCur.revealed) revealOp(); else newOp();
+});
+
 applySettings();
 fillSettingsForm();
 updateScore();
