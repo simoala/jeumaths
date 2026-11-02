@@ -7,7 +7,7 @@
 <meta name="description" content="Roue de conjugaison interactive en format diapositive : la roue tourne au hasard, l'élève conjugue et reçoit une correction avec les terminaisons en couleur.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Fredoka:wght@500;700&family=Cairo:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --felt:#5b1d2a; --felt2:#6e2636;
@@ -32,7 +32,7 @@
   /* ---------- Diapositive 4:3 (format PowerPoint standard) ---------- */
   #stage{
     position:absolute; left:0; top:0; width:1200px; height:900px; transform-origin:0 0;
-    padding:20px; display:grid; grid-template-columns:720px minmax(0,1fr); gap:16px;
+    padding:84px 20px 20px; display:grid; grid-template-columns:720px minmax(0,1fr); gap:16px;
     border-radius:6px; overflow:hidden;
     background:
       radial-gradient(circle at 20% 10%, rgba(255,255,255,.07), transparent 40%),
@@ -47,7 +47,7 @@
 
   /* ---------- Colonne gauche : la roue ---------- */
   .wheel-box{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; padding:10px}
-  #wheel{width:700px; height:700px; display:block; user-select:none}
+  #wheel{width:680px; height:680px; display:block; user-select:none}
   .seg{transition:fill .3s}
   .ring-verb .seg{fill:var(--green); stroke:var(--green-line); stroke-width:2}
   .ring-pron .seg{fill:var(--pink); stroke:var(--pink-line); stroke-width:2.5}
@@ -202,7 +202,7 @@
   .duel-end .btns button, .duel-form .btns button{border:0; border-radius:12px; padding:10px 20px; font-weight:700; font-size:24px}
 
   /* ---------- Jeu des tables de multiplication ---------- */
-  #multView{position:absolute; inset:0; z-index:15; padding:20px; display:flex; flex-direction:column; gap:14px;
+  #multView{position:absolute; inset:0; z-index:15; padding:84px 20px 20px; display:flex; flex-direction:column; gap:14px;
     background:
       radial-gradient(circle at 20% 10%, rgba(255,255,255,.07), transparent 40%),
       repeating-linear-gradient(45deg, #1f4a3a 0 3px, #24563f 3px 6px)}
@@ -243,6 +243,72 @@
   #mvTable .label-pink{margin-top:4px}
   #mvTable table.conj{font-size:22px}
 
+  /* ---------- Menu du haut ---------- */
+  .menu{position:absolute; left:20px; right:20px; top:14px; height:56px; z-index:18; display:flex; align-items:center; gap:8px;
+        background:#fffdf7; border-radius:16px; padding:0 10px; box-shadow:0 5px 0 rgba(0,0,0,.3)}
+  .menu .brand{font-family:'Fredoka','Andika',sans-serif; font-weight:700; font-size:22px; margin:0 8px 0 4px; white-space:nowrap}
+  .tab{border:3px solid transparent; background:#f1efe6; border-radius:12px; padding:5px 14px; font-size:20px; font-weight:700; white-space:nowrap}
+  .tab.on{background:#ffd6e5; border-color:#e2125a; color:#5a1030}
+  .tab.ar{font-family:'Cairo','Andika',sans-serif}
+  .menu .sp{flex:1}
+  .menu .tool{box-shadow:0 3px 0 rgba(0,0,0,.25); background:#f1efe6}
+  .topbar .week{flex:1; align-self:center}
+
+  /* ---------- جدول العد (tableau de numération) ---------- */
+  #numView{position:absolute; inset:0; z-index:15; padding:84px 20px 20px; display:grid; grid-template-columns:minmax(0,1fr) 220px; gap:16px;
+    font-family:'Cairo','Andika',sans-serif;
+    background:
+      radial-gradient(circle at 80% 10%, rgba(255,255,255,.08), transparent 40%),
+      repeating-linear-gradient(45deg, #1d3d6b 0 3px, #22467a 3px 6px)}
+  #numView[hidden]{display:none}
+  .nv-main{padding:16px 22px; display:flex; flex-direction:column; gap:10px; min-width:0}
+  .nv-opts{display:flex; flex-wrap:wrap; gap:6px; align-items:center; font-size:17px; font-weight:700}
+  .nv-opts .lbl2{color:var(--muted); margin-inline-start:6px}
+  .opt{border:2px solid #d8d2bf; background:#fff; border-radius:10px; padding:2px 10px; font-size:17px; font-weight:700; font-family:inherit}
+  .opt.on{background:var(--yellow); border-color:#c9a800; color:var(--verb)}
+  .nv-head{display:flex; align-items:center; gap:8px}
+  .nv-ask{font-size:24px; font-weight:700; color:#5a1030}
+  .nv-words{min-height:96px; display:flex; align-items:center; justify-content:center; gap:12px; text-align:center;
+            background:#fff8d6; border:3px dashed #e0b400; border-radius:16px; padding:8px 14px; font-size:36px; font-weight:800; line-height:1.35; color:#1f2328}
+  .nv-words.digits{font-family:'Fredoka','Andika',sans-serif; font-size:64px; letter-spacing:2px}
+  .nv-words .say{flex:none; border:0; background:#fff; border-radius:50%; width:48px; height:48px; font-size:22px; box-shadow:0 3px 0 rgba(0,0,0,.2)}
+  table.ntab{direction:ltr; border-collapse:separate; border-spacing:0; margin:4px auto 0; font-family:'Cairo','Andika',sans-serif}
+  table.ntab th, table.ntab td{border:3px solid #33415c; text-align:center}
+  table.ntab .cls{font-size:22px; font-weight:800; padding:4px 0; color:#fff}
+  table.ntab .cls.k{background:#2f7fd3} table.ntab .cls.u{background:#2e9d47}
+  table.ntab .rk{font-size:18px; font-weight:700; padding:2px 0; width:116px; line-height:1.2}
+  table.ntab .rk.k{background:#dbeafe} table.ntab .rk.u{background:#dcfce7}
+  table.ntab .sep{border-left-width:7px}
+  .ncell{height:118px; background:#fff; position:relative; cursor:pointer; touch-action:none; user-select:none;
+         font-family:'Fredoka','Andika',sans-serif; font-size:84px; font-weight:700; color:#1f2328; line-height:118px}
+  .ncell.sel{background:#fff3a6; box-shadow:inset 0 0 0 4px #f0b400}
+  .ncell.hover{background:#fde68a}
+  .ncell.ok{background:#dcfce7; color:var(--ok)}
+  .ncell.bad{background:#fee2e2; color:var(--ko)}
+  .ncell.bad::after{content:'✖'; position:absolute; top:2px; right:6px; font-size:20px; line-height:1; color:var(--ko)}
+  tr.solrow td{height:64px; font-family:'Fredoka','Andika',sans-serif; font-size:44px; font-weight:700; color:var(--ok); background:#f0fdf4}
+  tr.solrow[hidden]{display:none}
+  tr.solrow th{font-size:16px; font-weight:800; color:var(--ok); background:#f0fdf4; border:0; padding:0 8px}
+  .nv-btns{display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
+  .nv-btns button{font-family:inherit}
+  .nv-btns .spin-btn{font-size:26px; padding:10px 26px}
+  .nv-btns .check-btn{font-size:26px; padding:10px 22px}
+  .nv-btns [hidden]{display:none}
+  .nv-fb{min-height:44px; text-align:center; font-size:26px; font-weight:800}
+  .nv-fb.ok{color:var(--ok)} .nv-fb.ko{color:var(--ko)}
+  .nv-fb .hint{display:block; font-size:19px; font-weight:700; color:#5d6470}
+  .nv-fb .numk{color:#2f7fd3} .nv-fb .numu{color:#2e9d47}
+  .nv-side{padding:14px 12px; display:flex; flex-direction:column; align-items:center; gap:10px}
+  .nv-side h3{margin:0; font-size:22px; font-weight:800}
+  .ncards{display:grid; grid-template-columns:repeat(2, 86px); gap:10px}
+  .ncard{width:86px; height:86px; border-radius:14px; border:3px solid rgba(0,0,0,.25); box-shadow:0 5px 0 rgba(0,0,0,.25);
+         display:flex; align-items:center; justify-content:center; font-family:'Fredoka','Andika',sans-serif; font-size:58px; font-weight:700;
+         cursor:grab; touch-action:none; user-select:none; color:#1f2328}
+  .ncard:active{cursor:grabbing}
+  .nghost{position:fixed; z-index:100; pointer-events:none; transform:translate(-50%,-50%) rotate(-6deg); opacity:.92}
+  .nv-side .small{font-size:15px; color:var(--muted); text-align:center; line-height:1.35}
+  .nv-side .opt{font-size:18px; padding:6px 12px}
+
   .overlay{position:absolute; inset:0; background:rgba(30,8,14,.72); display:flex; align-items:center; justify-content:center; z-index:20; padding:30px}
   .overlay[hidden]{display:none}
   .panel{width:100%; max-height:100%; overflow:auto; padding:26px 30px}
@@ -279,6 +345,17 @@
 <body>
 <div id="stage">
 
+  <!-- ===== Menu ===== -->
+  <nav class="menu" aria-label="Menu des jeux">
+    <span class="brand">📚 Ma classe</span>
+    <button class="tab on" data-view="conj">🎡 Conjugaison</button>
+    <button class="tab" data-view="mult">✖️ Multiplication</button>
+    <button class="tab ar" data-view="num">🔢 جدول العد</button>
+    <span class="sp"></span>
+    <button class="tool" id="soundBtn" title="Son activé / coupé">🔊</button>
+    <button class="tool" id="fsBtn" title="Plein écran">⛶</button>
+  </nav>
+
   <!-- ===== Roue ===== -->
   <section class="card wheel-box" aria-label="Roue de conjugaison">
     <span class="pin l"></span><span class="pin r"></span>
@@ -308,21 +385,13 @@
   <!-- ===== Partie droite ===== -->
   <div class="right">
     <div class="topbar">
-      <div class="cloud">
-        <span class="pin" style="left:10px;top:12px;width:14px;height:14px"></span>
-        <span class="pin s" style="right:10px;top:10px;width:14px;height:14px"></span>
-        <h1>Tableau de<br>Conjugaison</h1>
-      </div>
+      <div class="week" id="weekLabel"></div>
       <div class="tools">
         <button class="tool" id="lessonBtn" title="Revoir la leçon">📖 Leçon</button>
         <button class="tool" id="duelBtn" title="Jeu à deux élèves">👥 Duel</button>
-        <button class="tool" id="multBtn" title="Jeu des tables de multiplication">✖️ Tables</button>
         <button class="tool" id="settingsBtn" title="Réglages de l'enseignant(e)">⚙️</button>
-        <button class="tool" id="soundBtn" title="Son activé / coupé">🔊</button>
-        <button class="tool" id="fsBtn" title="Plein écran">⛶</button>
       </div>
     </div>
-    <div class="week" id="weekLabel"></div>
 
     <section class="card qcard" aria-live="polite">
       <div class="duelbar" id="duelBar" hidden>
@@ -391,17 +460,7 @@
   <!-- ===== Jeu des tables de multiplication ===== -->
   <div id="multView" hidden>
     <div class="mv-top">
-      <div class="cloud">
-        <span class="pin" style="left:10px;top:12px;width:14px;height:14px"></span>
-        <span class="pin s" style="right:10px;top:10px;width:14px;height:14px"></span>
-        <h1>Tables de<br>multiplication</h1>
-      </div>
-      <div class="week" id="mvLabel" style="align-self:center"></div>
-      <div class="tools">
-        <button class="tool" id="mvBack" title="Revenir à la roue de conjugaison">🎡 Conjugaison</button>
-        <button class="tool" id="mvSound" title="Son activé / coupé">🔊</button>
-        <button class="tool" id="mvFs" title="Plein écran">⛶</button>
-      </div>
+      <div class="week" id="mvLabel"></div>
     </div>
     <div class="mv-grid">
       <section class="card mv-main" aria-live="polite">
@@ -429,6 +488,50 @@
         <div class="mv-count" id="mvCount"></div>
       </section>
     </div>
+  </div>
+
+  <!-- ===== جدول العد ===== -->
+  <div id="numView" dir="rtl" hidden>
+    <section class="card nv-main" aria-live="polite">
+      <div class="nv-opts">
+        <span class="pill">✅ <span id="nGood">0</span> / <span id="nTotal">0</span></span>
+        <span class="pill">🔥 <span id="nStreak">0</span></span>
+        <span class="lbl2">العدد:</span>
+        <span id="nRange"></span>
+        <span class="lbl2">العرض:</span>
+        <span id="nMode"></span>
+        <button class="opt" id="nZeros" title="أعداد فيها أصفار مثل 305 040">0️⃣ مع أصفار</button>
+      </div>
+      <div class="nv-head"><span class="nv-ask">✍️ اكتب هذا العدد في جدول العد:</span></div>
+      <div class="nv-words" id="nWords"><span>اضغط على « عدد جديد » للبدء 🎯</span></div>
+      <table class="ntab" id="nTab">
+        <tr><th class="cls k" colspan="3">فئة الآلاف</th><th class="cls u sep" colspan="3">فئة الوحدات البسيطة</th></tr>
+        <tr>
+          <th class="rk k">مئات<br>الآلاف</th><th class="rk k">عشرات<br>الآلاف</th><th class="rk k">وحدات<br>الآلاف</th>
+          <th class="rk u sep">مئات</th><th class="rk u">عشرات</th><th class="rk u">وحدات</th>
+        </tr>
+        <tr id="nCells">
+          <td class="ncell" data-i="0"></td><td class="ncell" data-i="1"></td><td class="ncell" data-i="2"></td>
+          <td class="ncell sep" data-i="3"></td><td class="ncell" data-i="4"></td><td class="ncell" data-i="5"></td>
+        </tr>
+        <tr class="solrow" id="nSol" hidden>
+          <td></td><td></td><td></td><td class="sep"></td><td></td><td></td>
+        </tr>
+      </table>
+      <div class="nv-fb" id="nFb"></div>
+      <div class="nv-btns">
+        <button class="spin-btn" id="nNew">🔄 عدد جديد</button>
+        <button class="check-btn" id="nCheck" disabled>✔ تحقق</button>
+        <button class="check-btn" id="nRetry" hidden style="background:#f08a00;box-shadow:0 5px 0 #a35d00">🔁 أعد المحاولة</button>
+        <button class="check-btn" id="nShow" hidden style="background:#2e9d47;box-shadow:0 5px 0 #1d6b30">👀 الحل</button>
+      </div>
+    </section>
+    <aside class="card nv-side">
+      <h3>بطاقات الأعداد</h3>
+      <div class="ncards" id="nCards" dir="ltr"></div>
+      <button class="opt" id="nClear">🧽 مسح الجدول</button>
+      <div class="small">اسحب البطاقة إلى الخانة المناسبة،<br>أو اضغط على خانة ثم على بطاقة.<br>لإزالة رقم: اسحبه خارج الجدول.</div>
+    </aside>
   </div>
 
   <!-- ===== Leçon ===== -->
@@ -793,7 +896,7 @@ function applySettings(){
   if (!TEMPS.length) TEMPS = [TENSES[0]];
   const names = VERBS.map(v => v.display).join(' · ');
   const tn = TEMPS.map(t => t.label.toLowerCase()).join(', ');
-  $('weekLabel').textContent = `Cette semaine : ${names} (${tn})`;
+  $('weekLabel').textContent = `📅 ${names} (${tn})`;
   buildRings();
   renderLesson();
 }
@@ -1373,12 +1476,11 @@ $('checkBtn').addEventListener('click', check);
 $('sayBtn').addEventListener('click', say);
 $('answer').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); check(); } });
 document.addEventListener('keydown', e => {
-  if (!$('multView').hidden) return;
+  if (!$('multView').hidden || !$('numView').hidden) return;
   if (e.key === 'Enter' && answered && !spinning && document.activeElement?.tagName !== 'TEXTAREA' && document.activeElement?.tagName !== 'BUTTON') { e.preventDefault(); spin(); }
 });
-const toggleSound = () => { soundOn = !soundOn; $('soundBtn').textContent = $('mvSound').textContent = soundOn ? '🔊' : '🔇'; };
+const toggleSound = () => { soundOn = !soundOn; $('soundBtn').textContent = soundOn ? '🔊' : '🔇'; };
 $('soundBtn').addEventListener('click', toggleSound);
-$('mvSound').addEventListener('click', toggleSound);
 $('resetBtn').addEventListener('click', () => { score.good = score.total = score.streak = 0; updateScore(); });
 $('centerBtn').addEventListener('click', () => { if (!$('spinBtn').disabled) spin(); });
 const openOverlay = id => { $(id).hidden = false; };
@@ -1388,7 +1490,6 @@ $('settingsBtn').addEventListener('click', () => { fillSettingsForm(); $('linkNo
 document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => closeOverlay(b.dataset.close)));
 document.querySelectorAll('.overlay').forEach(o => o.addEventListener('click', e => { if (e.target === o) o.hidden = true; }));
 document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.overlay').forEach(o => o.hidden = true); });
-$('mvFs').addEventListener('click', () => $('fsBtn').click());
 $('fsBtn').addEventListener('click', () => {
   const d = document;
   if (d.fullscreenElement || d.webkitFullscreenElement) (d.exitFullscreen || d.webkitExitFullscreen).call(d);
@@ -1397,9 +1498,11 @@ $('fsBtn').addEventListener('click', () => {
 
 // La diapositive 1200×900 (4:3) est agrandie/réduite pour remplir l'écran (comme PowerPoint)
 const stage = $('stage');
+let stageScale = 1;
 function fit(){
   const W = window.innerWidth, H = window.innerHeight;
   const k = Math.min(W / 1200, H / 900);
+  stageScale = k;
   stage.style.transform = `scale(${k})`;
   stage.style.left = ((W - 1200 * k) / 2) + 'px';
   stage.style.top  = ((H - 900 * k) / 2) + 'px';
@@ -1556,8 +1659,6 @@ function revealOp(){
 $('mvNew').addEventListener('click', newOp);
 $('mvReveal').addEventListener('click', revealOp);
 $('mvClap').addEventListener('click', () => { confetti(false); sfx.fanfare(false); sfx.applause(3, 1.2); });
-$('multBtn').addEventListener('click', () => { buildMv(); $('multView').hidden = false; });
-$('mvBack').addEventListener('click', () => { stopTimer(); $('multView').hidden = true; });
 // Barre d'espace : nouvelle opération / correction
 document.addEventListener('keydown', e => {
   if ($('multView').hidden || e.key !== ' ' || /INPUT|TEXTAREA|BUTTON/.test(document.activeElement?.tagName || '')) return;
@@ -1565,7 +1666,337 @@ document.addEventListener('keydown', e => {
   if (mvCur && !mvCur.revealed) revealOp(); else newOp();
 });
 
+/* =========================================================
+   7. جدول العد — écrire un nombre (1 000 à 999 999) avec des cartes
+   ========================================================= */
+// ----- Nombres en lettres (arabe) -----
+const AR_U = ['', 'واحد', 'اثنان', 'ثلاثة', 'أربعة', 'خمسة', 'ستة', 'سبعة', 'ثمانية', 'تسعة'];
+const AR_T = ['', 'عشرة', 'عشرون', 'ثلاثون', 'أربعون', 'خمسون', 'ستون', 'سبعون', 'ثمانون', 'تسعون'];
+const AR_H = ['', 'مائة', 'مائتان', 'ثلاثمائة', 'أربعمائة', 'خمسمائة', 'ستمائة', 'سبعمائة', 'ثمانمائة', 'تسعمائة'];
+function ar99(n){
+  if (n < 10) return AR_U[n];
+  if (n === 10) return 'عشرة';
+  if (n === 11) return 'أحد عشر';
+  if (n === 12) return 'اثنا عشر';
+  if (n < 20) return AR_U[n - 10] + ' عشر';
+  const u = n % 10, t = Math.floor(n / 10);
+  return u ? AR_U[u] + ' و' + AR_T[t] : AR_T[t];
+}
+function ar999(n){
+  const h = Math.floor(n / 100), r = n % 100;
+  if (!h) return ar99(r);
+  return r ? AR_H[h] + ' و' + ar99(r) : AR_H[h];
+}
+function arThousands(t){
+  if (t === 1) return 'ألف';
+  if (t === 2) return 'ألفان';
+  if (t <= 10) return ar99(t) + ' آلاف';
+  if (t < 100) return ar99(t) + ' ألفا';
+  const h = Math.floor(t / 100), r = t % 100;
+  const hw = h === 2 ? 'مائتا' : AR_H[h];              // مائتا ألف
+  if (r === 0) return hw + ' ألف';
+  if (r === 1) return hw + ' ألف وألف';
+  if (r === 2) return hw + ' ألف وألفان';
+  if (r <= 10) return AR_H[h] + ' و' + ar99(r) + ' آلاف';
+  return AR_H[h] + ' و' + ar99(r) + ' ألفا';
+}
+function arWords(n){
+  const t = Math.floor(n / 1000), u = n % 1000;
+  const parts = [];
+  if (t) parts.push(arThousands(t));
+  if (u) parts.push(ar999(u));
+  return parts.join(' و');
+}
+// ----- Nombres en lettres (français, orthographe traditionnelle) -----
+const FR_U = ['zéro','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix','onze','douze','treize','quatorze','quinze','seize'];
+const FR_T = ['', 'dix', 'vingt', 'trente', 'quarante', 'cinquante', 'soixante'];
+function fr99(n, fin){
+  if (n <= 16) return FR_U[n];
+  if (n < 20) return 'dix-' + FR_U[n - 10];
+  if (n < 70){ const t = Math.floor(n / 10), u = n % 10; return FR_T[t] + (u === 1 ? ' et un' : u ? '-' + FR_U[u] : ''); }
+  if (n < 80) return n === 71 ? 'soixante et onze' : 'soixante-' + fr99(n - 60);
+  if (n === 80) return fin ? 'quatre-vingts' : 'quatre-vingt';
+  return 'quatre-vingt-' + fr99(n - 80);
+}
+function fr999(n, fin){
+  const h = Math.floor(n / 100), r = n % 100;
+  if (!h) return fr99(r, fin);
+  const hw = h === 1 ? 'cent' : FR_U[h] + ' cent' + (r === 0 && fin ? 's' : '');
+  return r ? hw + ' ' + fr99(r, fin) : hw;
+}
+function frWords(n){
+  const t = Math.floor(n / 1000), u = n % 1000;
+  let s = t === 1 ? 'mille' : fr999(t, false) + ' mille';
+  if (u) s += ' ' + fr999(u, true);
+  return s;
+}
+const groupDigits = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+
+// ----- Réglages -----
+const NV_KEY = 'roue-numeration-v1';
+const NV_RANGES = [
+  {id:'k1',  label:'الآلاف',          min:1000,   max:9999},
+  {id:'k10', label:'عشرات الآلاف',    min:10000,  max:99999},
+  {id:'k100',label:'مئات الآلاف',     min:100000, max:999999},
+  {id:'all', label:'الكل',            min:1000,   max:999999},
+];
+const NV_MODES = [
+  {id:'ar', label:'بالحروف'},
+  {id:'fr', label:'En lettres'},
+  {id:'dg', label:'بالأرقام'},
+];
+let nv = (() => {
+  const d = {range:'all', mode:'ar', zeros:true};
+  try { const s = JSON.parse(localStorage.getItem(NV_KEY)); if (s && s.range) return Object.assign(d, s); } catch(e) {}
+  return d;
+})();
+const saveNv = () => { try { localStorage.setItem(NV_KEY, JSON.stringify(nv)); } catch(e) {} };
+const nScore = {good:0, total:0, streak:0};
+let nCur = null;                 // {n, digits:[6], counted, locked, done}
+let nSel = null;                 // index de la case choisie
+const nCellEls = [...document.querySelectorAll('#nCells .ncell')];
+const CARD_COLORS = ['#ffd1dc','#ffe5b4','#fff3a6','#d9f99d','#bbf7d0','#a5f3fc','#bfdbfe','#ddd6fe','#fbcfe8','#fed7aa'];
+
+function optGroup(boxId, list, key){
+  const box = $(boxId); box.textContent = '';
+  for (const o of list){
+    const b = document.createElement('button');
+    b.className = 'opt' + (nv[key] === o.id ? ' on' : '');
+    b.textContent = o.label;
+    if (o.id === 'fr') b.dir = 'ltr';
+    b.addEventListener('click', () => {
+      nv[key] = o.id; saveNv();
+      box.querySelectorAll('.opt').forEach(x => x.classList.toggle('on', x === b));
+      if (key === 'mode' && nCur) showWords();
+    });
+    box.appendChild(b);
+  }
+}
+function buildNv(){
+  optGroup('nRange', NV_RANGES, 'range');
+  optGroup('nMode', NV_MODES, 'mode');
+  $('nZeros').classList.toggle('on', nv.zeros);
+  const cards = $('nCards');
+  if (!cards.children.length){
+    for (let d = 0; d <= 9; d++){
+      const c = document.createElement('div');
+      c.className = 'ncard'; c.textContent = d; c.style.background = CARD_COLORS[d];
+      c.addEventListener('pointerdown', e => startDrag(e, String(d), null));
+      cards.appendChild(c);
+    }
+  }
+}
+$('nZeros').addEventListener('click', () => { nv.zeros = !nv.zeros; saveNv(); $('nZeros').classList.toggle('on', nv.zeros); });
+
+function randomNumber(){
+  const r = NV_RANGES.find(x => x.id === nv.range) || NV_RANGES[3];
+  let len;
+  if (r.id === 'all') len = 4 + rnd(3); else len = String(r.min).length;
+  let ds;
+  do {
+    ds = [];
+    for (let i = 0; i < len; i++){
+      let d = i === 0 ? 1 + rnd(9) : rnd(10);
+      if (i > 0 && nv.zeros && Math.random() < 0.3) d = 0;   // plus de zéros pour s'entraîner
+      ds.push(d);
+    }
+  } while (nCur && Number(ds.join('')) === nCur.n);
+  return Number(ds.join(''));
+}
+function showWords(){
+  const w = $('nWords'); w.textContent = '';
+  w.classList.toggle('digits', nv.mode === 'dg');
+  const span = document.createElement('span');
+  if (nv.mode === 'ar'){ span.textContent = arWords(nCur.n); span.dir = 'rtl'; }
+  else if (nv.mode === 'fr'){ span.textContent = frWords(nCur.n); span.dir = 'ltr'; span.style.fontFamily = "'Andika',sans-serif"; }
+  else { span.textContent = groupDigits(nCur.n); span.dir = 'ltr'; }
+  w.appendChild(span);
+  if (nv.mode !== 'dg' && 'speechSynthesis' in window){
+    const b = document.createElement('button'); b.className = 'say'; b.textContent = '🔈'; b.title = 'استمع';
+    b.addEventListener('click', () => {
+      const u = new SpeechSynthesisUtterance(span.textContent);
+      u.lang = nv.mode === 'ar' ? 'ar-SA' : 'fr-FR'; u.rate = 0.85;
+      const v = speechSynthesis.getVoices().find(x => x.lang && x.lang.toLowerCase().startsWith(nv.mode === 'ar' ? 'ar' : 'fr'));
+      if (v) u.voice = v;
+      speechSynthesis.cancel(); speechSynthesis.speak(u);
+    });
+    w.appendChild(b);
+  }
+}
+function paintCells(){
+  nCellEls.forEach((c, i) => {
+    c.textContent = nCur ? nCur.digits[i] : '';
+    c.classList.toggle('sel', nSel === i && !(nCur && nCur.locked));
+  });
+}
+function clearMarks(){ nCellEls.forEach(c => c.classList.remove('ok','bad')); $('nSol').hidden = true; }
+function newNumber(){
+  const n = randomNumber();
+  nCur = {n, digits:['','','','','',''], counted:false, locked:false, done:false};
+  nSel = null;
+  clearMarks(); showWords(); paintCells();
+  $('nFb').className = 'nv-fb'; $('nFb').textContent = '';
+  $('nCheck').disabled = false; $('nCheck').hidden = false;
+  $('nRetry').hidden = true; $('nShow').hidden = true;
+  sfx.ding();
+}
+function placeDigit(i, d){
+  if (!nCur || nCur.locked) return;
+  nCur.digits[i] = d;
+  note(660 + Number(d || 0) * 40, 0, 0.06, 'sine', 0.12);
+  paintCells();
+}
+function selectCell(i){ if (!nCur || nCur.locked) return; nSel = nSel === i ? null : i; paintCells(); }
+
+// ----- Glisser-déposer (souris, doigt, TBI) -----
+let ndrag = null;
+function startDrag(e, digit, fromCell){
+  if (!nCur || nCur.locked){ if (!nCur) flashFb('اضغط على « عدد جديد » أولا 👇'); return; }
+  e.preventDefault();
+  const g = document.createElement('div');
+  g.className = 'ncard nghost'; g.textContent = digit;
+  g.style.background = CARD_COLORS[Number(digit)];
+  const k = stageScale;
+  Object.assign(g.style, {width: 86 * k + 'px', height: 86 * k + 'px', fontSize: 58 * k + 'px', borderRadius: 14 * k + 'px'});
+  document.body.appendChild(g);
+  ndrag = {digit, fromCell, g, moved:false, x0:e.clientX, y0:e.clientY};
+  moveGhost(e);
+  if (fromCell == null) g.style.opacity = '0';      // ne s'affiche que si on bouge vraiment
+  window.addEventListener('pointermove', moveGhost);
+  window.addEventListener('pointerup', endDrag, {once:true});
+  window.addEventListener('pointercancel', endDrag, {once:true});
+}
+function cellAt(x, y){ const el = document.elementFromPoint(x, y); return el ? el.closest('#nCells .ncell') : null; }
+function moveGhost(e){
+  if (!ndrag) return;
+  ndrag.g.style.left = e.clientX + 'px'; ndrag.g.style.top = e.clientY + 'px';
+  if (Math.hypot(e.clientX - ndrag.x0, e.clientY - ndrag.y0) > 8){ ndrag.moved = true; ndrag.g.style.opacity = '.92'; }
+  const c = cellAt(e.clientX, e.clientY);
+  nCellEls.forEach(x => x.classList.toggle('hover', x === c));
+}
+function endDrag(e){
+  window.removeEventListener('pointermove', moveGhost);
+  if (!ndrag) return;
+  const {digit, fromCell, g, moved} = ndrag;
+  ndrag = null; g.remove();
+  nCellEls.forEach(x => x.classList.remove('hover'));
+  const c = e.type === 'pointercancel' ? null : cellAt(e.clientX, e.clientY);
+  const i = c ? Number(c.dataset.i) : null;
+  if (!moved){
+    if (fromCell != null) selectCell(fromCell);                 // simple clic sur une case
+    else if (nSel != null){ placeDigit(nSel, digit); nSel = nSel < 5 ? nSel + 1 : null; paintCells(); }
+    else flashFb('اختر خانة في الجدول أولا، ثم البطاقة 👆');
+    return;
+  }
+  if (i != null){
+    if (fromCell != null && fromCell !== i) nCur.digits[fromCell] = '';
+    placeDigit(i, digit);
+  } else if (fromCell != null){ nCur.digits[fromCell] = ''; paintCells(); }
+}
+nCellEls.forEach((c, i) => c.addEventListener('pointerdown', e => {
+  if (nCur && !nCur.locked && nCur.digits[i] !== '') startDrag(e, nCur.digits[i], i);
+  else selectCell(i);
+}));
+function flashFb(t){ const f = $('nFb'); f.className = 'nv-fb ko'; f.textContent = t; }
+
+// ----- Vérification -----
+const NV_OK = ['أحسنت! 🌟', 'ممتاز! 👏', 'رائع، استمر! 💪', 'برافو! 🎉', 'عمل جيد جدا! ⭐', 'أنت بطل! 🏆'];
+const NV_KO = ['حاول مرة أخرى 🙂', 'انتبه إلى رتبة كل رقم 👀', 'لا بأس، نتعلم من أخطائنا 💡'];
+function expectedDigits(n){ const s = String(n); return Array(6 - s.length).fill('').concat(s.split('')); }
+function nvCheck(){
+  if (!nCur || nCur.locked) return;
+  const got = nCur.digits, exp = expectedDigits(nCur.n);
+  if (got.every(d => d === '')){ flashFb('ضع البطاقات في الجدول أولا ✋'); return; }
+  nCur.locked = true; nSel = null; paintCells();
+  const ok = got.every((d, i) => d === exp[i]);
+  nCellEls.forEach((c, i) => { if (got[i] !== '' || exp[i] !== '') c.classList.add(got[i] === exp[i] ? 'ok' : 'bad'); });
+  if (!nCur.counted){ nCur.counted = true; nScore.total++; if (ok){ nScore.good++; nScore.streak++; } else nScore.streak = 0; }
+  else if (ok){ nScore.streak = 0; }
+  const f = $('nFb'); f.textContent = '';
+  if (ok){
+    nCur.done = true;
+    f.className = 'nv-fb ok';
+    f.append(NV_OK[rnd(NV_OK.length)] + ' ');
+    appendNumber(f);
+    confetti(nScore.streak >= 3 && nScore.streak % 3 === 0);
+    sfx.fanfare(false); sfx.applause(2.8, 1);
+    $('nCheck').hidden = true;
+  } else {
+    f.className = 'nv-fb ko';
+    f.append(NV_KO[rnd(NV_KO.length)]);
+    const h = document.createElement('span'); h.className = 'hint'; h.textContent = nvHint(got, exp); f.appendChild(h);
+    sfx.oops();
+    $('nCheck').hidden = true; $('nRetry').hidden = false; $('nShow').hidden = false;
+  }
+  $('nGood').textContent = nScore.good; $('nTotal').textContent = nScore.total; $('nStreak').textContent = nScore.streak;
+}
+function appendNumber(f){
+  const s = groupDigits(nCur.n), sp = s.lastIndexOf(' ');
+  const wrap = document.createElement('bdi'); wrap.dir = 'ltr';
+  const k = document.createElement('span'); k.className = 'numk'; k.textContent = s.slice(0, sp);
+  const u = document.createElement('span'); u.className = 'numu'; u.textContent = s.slice(sp);
+  wrap.append(k, u); f.appendChild(wrap);
+}
+function nvHint(got, exp){
+  const firstG = got.findIndex(d => d !== ''), firstE = exp.findIndex(d => d !== '');
+  if (got[firstG] === '0' && firstG < firstE) return 'لا نكتب 0 في يسار العدد.';
+  const gd = got.filter(d => d !== '').join(''), ed = exp.filter(d => d !== '').join('');
+  if (exp.includes('0') && gd.length < ed.length && gd === ed.replace(/0/g, ''))
+    return 'لا تنس كتابة 0 في الخانة الفارغة داخل العدد.';
+  if (got.filter(d => d !== '').join('') === exp.filter(d => d !== '').join('')) return 'الأرقام صحيحة، لكن انتبه إلى رتبة كل رقم.';
+  return 'اقرأ العدد جيدا، ثم ضع كل رقم في رتبته.';
+}
+function nvShow(){
+  if (!nCur) return;
+  const exp = expectedDigits(nCur.n);
+  [...$('nSol').querySelectorAll('td')].forEach((td, i) => td.textContent = exp[i]);
+  $('nSol').hidden = false;
+  $('nRetry').hidden = true; $('nShow').hidden = true;
+  nCur.done = true;
+  const f = $('nFb'); f.className = 'nv-fb ok'; f.textContent = '✔ الحل: '; appendNumber(f);
+  sfx.ding();
+}
+function nvRetry(){
+  if (!nCur) return;
+  nCur.locked = false; clearMarks(); paintCells();
+  $('nFb').className = 'nv-fb'; $('nFb').textContent = '';
+  $('nRetry').hidden = true; $('nShow').hidden = true; $('nCheck').hidden = false;
+}
+$('nNew').addEventListener('click', newNumber);
+$('nCheck').addEventListener('click', nvCheck);
+$('nRetry').addEventListener('click', nvRetry);
+$('nShow').addEventListener('click', nvShow);
+$('nClear').addEventListener('click', () => { if (nCur && !nCur.locked){ nCur.digits = ['','','','','','']; nSel = null; paintCells(); } });
+// Clavier : chiffres dans la case choisie, flèches, effacer
+document.addEventListener('keydown', e => {
+  if ($('numView').hidden || !nCur || nCur.locked || /INPUT|TEXTAREA/.test(document.activeElement?.tagName || '')) return;
+  if (/^[0-9]$/.test(e.key) && nSel != null){ placeDigit(nSel, e.key); nSel = nSel < 5 ? nSel + 1 : null; paintCells(); e.preventDefault(); }
+  else if ((e.key === 'Backspace' || e.key === 'Delete') && nSel != null){ nCur.digits[nSel] = ''; paintCells(); e.preventDefault(); }
+  else if (e.key === 'ArrowRight' && nSel != null && nSel < 5){ nSel++; paintCells(); }
+  else if (e.key === 'ArrowLeft' && nSel != null && nSel > 0){ nSel--; paintCells(); }
+  else if (e.key === 'Enter'){ nvCheck(); e.preventDefault(); }
+});
+
+/* ---------- Menu : changer de jeu ---------- */
+const VIEWS = {conj:'', mult:'#multiplication', num:'#numeration'};
+function showView(v){
+  if (!VIEWS.hasOwnProperty(v)) v = 'conj';
+  if (v !== 'mult') stopTimer();
+  if (v === 'mult') buildMv();
+  if (v === 'num') buildNv();
+  $('multView').hidden = v !== 'mult';
+  $('numView').hidden = v !== 'num';
+  document.querySelectorAll('.menu .tab').forEach(t => t.classList.toggle('on', t.dataset.view === v));
+  document.querySelectorAll('.overlay').forEach(o => o.hidden = true);
+  try { history.replaceState(null, '', location.pathname + location.search + VIEWS[v]); } catch(e) {}
+}
+document.querySelectorAll('.menu .tab').forEach(t => t.addEventListener('click', () => showView(t.dataset.view)));
+const startView = Object.keys(VIEWS).find(k => VIEWS[k] && VIEWS[k] === location.hash);
+
+window.__arWords = arWords; window.__frWords = frWords; window.__nv = () => nCur && nCur.n;
+
 applySettings();
+if (startView) showView(startView);
 fillSettingsForm();
 updateScore();
 
